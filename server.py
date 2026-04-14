@@ -30,8 +30,8 @@ def convert():
     file_id = str(uuid.uuid4())
     filename = f"{file_id}.mp3"
 
-    # IMPORTANT: safe absolute path for Render
-    COOKIE_PATH = os.path.join(os.path.dirname(__file__), "cookies.txt")
+    # YOUR ACTUAL COOKIE FILE NAME
+    COOKIE_PATH = os.path.join(os.path.dirname(__file__), "www.youtube.com_cookies.txt")
 
     ydl_opts = {
         "format": "bestaudio/best",
@@ -39,7 +39,7 @@ def convert():
         "quiet": True,
         "noplaylist": True,
 
-        # cookies fix
+        # cookies (ONLY if file exists)
         "cookiefile": COOKIE_PATH if os.path.exists(COOKIE_PATH) else None,
 
         "extractor_args": {
