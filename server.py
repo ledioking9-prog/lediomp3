@@ -1,14 +1,25 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, send_from_directory
 import yt_dlp
 import uuid
 import os
 
 app = Flask(__name__)
 
+# ---------------- UI (your website) ----------------
 @app.route("/")
 def home():
-    return "Server running"
+    return send_from_directory(".", "index.html")
 
+@app.route("/script.js")
+def js():
+    return send_from_directory(".", "script.js")
+
+@app.route("/style.css")
+def css():
+    return send_from_directory(".", "style.css")
+
+
+# ---------------- CONVERTER ----------------
 @app.route("/convert")
 def convert():
     url = request.args.get("url")
@@ -21,39 +32,30 @@ def convert():
 
     ydl_opts = {
         "format": "bestaudio/best",
-        "outtmpl": file_id,  # no extension here
+        "outtmpl": file_id,
         "postprocessors": [{
             "key": "FFmpegExtractAudio",
             "preferredcodec": "mp3",
             "preferredquality": "192",
         }],
-        "quiet": False,
+        "quiet": True,
         "noplaylist": True
     }
 
     try:
-        # download + convert
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
 
-        # check if file exists
         if not os.path.exists(filename):
-            return "Conversion failed (file not created)", 500
+            return "Conversion failed", 500
 
-        # send file
         return send_file(filename, as_attachment=True)
 
     except Exception as e:
-        print("ERROR:", str(e))
         return str(e), 500
 
-    finally:
-        # clean up file after sending (optional)
-        if os.path.exists(filename):
-            try:
-                os.remove(filename)
-            except:
-                pass
 
+# ---------------- RENDER PORT FIX ----------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
