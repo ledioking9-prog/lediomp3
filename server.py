@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-# ---------------- UI (your website) ----------------
+# ---------------- FRONTEND ----------------
 @app.route("/")
 def home():
     return send_from_directory(".", "index.html")
@@ -19,7 +19,7 @@ def css():
     return send_from_directory(".", "style.css")
 
 
-# ---------------- CONVERTER ----------------
+# ---------------- CONVERT ----------------
 @app.route("/convert")
 def convert():
     url = request.args.get("url")
@@ -33,13 +33,18 @@ def convert():
     ydl_opts = {
         "format": "bestaudio/best",
         "outtmpl": file_id,
+        "quiet": True,
+        "noplaylist": True,
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["android"]
+            }
+        },
         "postprocessors": [{
             "key": "FFmpegExtractAudio",
             "preferredcodec": "mp3",
             "preferredquality": "192",
         }],
-        "quiet": True,
-        "noplaylist": True
     }
 
     try:
@@ -47,7 +52,7 @@ def convert():
             ydl.download([url])
 
         if not os.path.exists(filename):
-            return "Conversion failed", 500
+            return "Download failed", 500
 
         return send_file(filename, as_attachment=True)
 
