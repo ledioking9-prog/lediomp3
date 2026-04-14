@@ -35,11 +35,16 @@ def convert():
         "outtmpl": file_id,
         "quiet": True,
         "noplaylist": True,
+
+        # 🔑 COOKIES FIX (IMPORTANT)
+        "cookiefile": "cookies.txt",
+
         "extractor_args": {
             "youtube": {
                 "player_client": ["android"]
             }
         },
+
         "postprocessors": [{
             "key": "FFmpegExtractAudio",
             "preferredcodec": "mp3",
