@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #0a0f1a;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* CARD */
+.card {
+  width: 420px;
+  padding: 30px;
+  border-radius: 18px;
+
+  text-align: center;
+
+  background: linear-gradient(145deg, #111a2e, #0a1020);
+
+  box-shadow:
+    6px 6px 12px rgba(0, 0, 0, 0.35),
+    -6px -6px 12px rgba(255, 255, 255, 0.03);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+/* TITLE */
+.title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+}
+
+/* INPUT */
+input {
+  width: 100%;
+  max-width: 320px;
+  padding: 14px;
+
+  border: none;
+  outline: none;
+  border-radius: 12px;
+
+  background: #0c1426;
+  color: white;
+
+  text-align: center;
+
+  box-shadow:
+    inset 2px 2px 5px rgba(0, 0, 0, 0.4),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.03);
+}
+
+input:focus {
+  outline: 1px solid rgba(255, 45, 94, 0.4);
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 14px;
+  padding: 14px;
+
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  background: linear-gradient(145deg, #ff2d5e, #c8003a);
+
+  box-shadow:
+    3px 3px 8px rgba(0, 0, 0, 0.35),
+    -3px -3px 8px rgba(255, 255, 255, 0.03);
+
+  color: white;
+  font-weight: bold;
+
+  transition: 0.15s;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* STATUS */
+#status {
+  margin-top: 14px;
+  font-size: 14px;
+  opacity: 0.8;
+}
